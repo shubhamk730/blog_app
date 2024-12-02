@@ -1,8 +1,9 @@
 import { SignupInput } from "@sk730/blog-common";
 import axios from "axios";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config";
+import { isUserLoggedIn } from "../hooks";
 
 export const Auth = ({type} : {type :"signup" | "signin"}) => {
     const navigate = useNavigate();
@@ -12,12 +13,20 @@ export const Auth = ({type} : {type :"signup" | "signin"}) => {
         password: ""
     })
 
+    useEffect(() => {
+        
+        if(isUserLoggedIn()){    
+            navigate("/");
+        }
+
+    }, [])
+
     async function sendRequest() {
         try {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
             const jwt = response.data;
             localStorage.setItem("token", jwt.data.token);
-            navigate("/blogs");
+            navigate("/");
         } catch(e) {
             alert("Error while signing up")
         }

@@ -12,6 +12,19 @@ export interface Blog {
     }
 }
 
+export const isUserLoggedIn = () => {
+    try {
+        const token = localStorage.getItem("token");
+
+        if(token?.length) 
+            return true;
+
+        return false;
+    } catch(ex) {
+        return false;
+    }
+}
+
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
     const [blog, setBlog] = useState<Blog>();
