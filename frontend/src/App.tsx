@@ -5,6 +5,7 @@ import { Blog } from './pages/Blog'
 import { Blogs } from './pages/Blogs';
 import { Publish } from './pages/Publish';
 import { PrivateRoute } from './components/PrivateRoute';
+import Error from './components/Error';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           </Route>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="*" element={<Error />}/>
         </Routes>
       </BrowserRouter>
     </>
